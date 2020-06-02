@@ -46,6 +46,10 @@ public class User {
 	public Date getJoinDate() {
 		return this.joinDate;
 	}
+	
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
 
 	public Set<Album> getAlbums() {
 		return this.albums;
@@ -79,11 +83,24 @@ public class User {
 	
 	public void likePhoto(Photo photo) {
 		this.likedPhotos.add(photo);
-		photo.getLikingUsers.add(this);
+		photo.getLikingUsers().add(this);
 	}
 	
 	public void unlikePhoto(Photo photo) {
 		this.likedPhotos.remove(photo);
-		photo.getLikingUsers.remove(this);
+		photo.getLikingUsers().remove(this);
+	}
+	
+	public int getPhotosNumber() {
+		int number = 0;
+		for (Album album : this.albums) {
+			number += album.getPhotos().size();
+		}
+		return number;
+	}
+	
+	@Override
+	public String toString() {
+		return "User \'" + getUserName() + "\'. " + getFriends().size() + " friends. " + getPhotosNumber() + " photos in " + getAlbums().size() + " albums.";
 	}
 }
