@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -64,6 +63,7 @@ public class User {
 	}
 	
 	public void addAlbum(Album album) {
+		album.setOwner(this);
 		this.albums.add(album);
 	}
 	
@@ -81,9 +81,13 @@ public class User {
 		user.getFriends().remove(this);
 	}
 	
-	public void likePhoto(Photo photo) {
-		this.likedPhotos.add(photo);
-		photo.getLikingUsers().add(this);
+	public void likePhoto(Photo photo) {	
+		if (this.friends.contains(photo.getOwner())) {
+			this.likedPhotos.add(photo);
+			photo.getLikingUsers().add(this);
+		} else {
+			System.out.println("Photo has not been liked. Its owner is not a friend of yours.");
+		}
 	}
 	
 	public void unlikePhoto(Photo photo) {

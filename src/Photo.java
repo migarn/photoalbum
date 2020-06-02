@@ -23,6 +23,9 @@ public class Photo {
 	@Column
 	private Date date;
 	
+	@Column
+	private User owner;
+	
 	@ManyToMany
 	private Set<User> likingUsers = new HashSet<User>();
 
@@ -40,6 +43,14 @@ public class Photo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public User getOwner() {
+		return this.owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	public Date getDate() {
