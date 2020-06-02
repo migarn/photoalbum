@@ -29,7 +29,7 @@ public class Album {
 	private Set<Photo> photos = new LinkedHashSet<Photo>();
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -37,7 +37,7 @@ public class Album {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -45,7 +45,7 @@ public class Album {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -53,7 +53,7 @@ public class Album {
 	}
 
 	public Set<Photo> getPhotos() {
-		return photos;
+		return this.photos;
 	}
 
 	public void setPhotos(Set<Photo> photos) {
@@ -68,12 +68,8 @@ public class Album {
 		this.photos.remove(photo);
 	}
 	
-	public int getPhotosNumber() {
-		return this.photos.size();
-	}
-	
 	@Override
 	public String toString() {
-		return "Album \'" + getName() + "\': " + getDescription() + ". Number of photos: " + getPhotosNumber() + ".";
+		return "Album \'" + getName() + "\': " + getDescription() + ". Number of photos: " + getPhotos().size() + ".";
 	}
 }
