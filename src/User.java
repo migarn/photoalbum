@@ -26,7 +26,7 @@ public class User {
 	private Date joinDate;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "owner")
+	@JoinColumn(name = "user_userName")
 	private Set<Album> albums = new HashSet<Album>();
 		
 	@ManyToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

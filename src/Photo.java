@@ -30,7 +30,7 @@ public class Photo {
 	@JoinTable(
 			name = "photos_users",
 			joinColumns = @JoinColumn(name = "photo_id"),
-			inverseJoinColumns = @JoinColumn(name = "userName")
+			inverseJoinColumns = @JoinColumn(name = "user_userName")
 	)
 	private Set<User> likingUsers = new HashSet<User>();
 
