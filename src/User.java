@@ -63,7 +63,7 @@ public class User {
 	}
 	
 	public void addAlbum(Album album) {
-		album.setOwner(this);
+		album.setOwner(this.getUserName());
 		this.albums.add(album);
 	}
 	
@@ -81,11 +81,17 @@ public class User {
 		user.getFriends().remove(this);
 	}
 	
-	public void likePhoto(Photo photo) {	
-		if (this.friends.contains(photo.getOwner())) {
-			this.likedPhotos.add(photo);
-			photo.getLikingUsers().add(this);
-		} else {
+	public void likePhoto(Photo photo) {
+		boolean isOwnerFriend = false;
+		for (User user : this.friends) {
+			if (user.getUserName().equals(photo.getOwner())) {
+				this.likedPhotos.add(photo);
+				photo.getLikingUsers().add(this);
+				isOwnerFriend = true;
+				break;
+			}
+		}
+		if (!isOwnerFriend) {
 			System.out.println("Photo has not been liked. Its owner is not a friend of yours.");
 		}
 	}

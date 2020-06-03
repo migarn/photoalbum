@@ -25,7 +25,7 @@ public class Album {
 	private String description;
 	
 	@Column
-	private User owner;
+	private String owner;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	//@JoinColumn(name="school_id")
@@ -55,11 +55,11 @@ public class Album {
 		this.description = description;
 	}
 	
-	public User getOwner() {
+	public String getOwner() {
 		return this.owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 
