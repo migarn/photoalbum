@@ -24,9 +24,6 @@ public class Album {
 	@Column
 	private String description;
 	
-	@Column
-	private String owner;
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "album_id")
 	private Set<Photo> photos = new LinkedHashSet<Photo>();
@@ -54,14 +51,6 @@ public class Album {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public String getOwner() {
-		return this.owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
 
 	public Set<Photo> getPhotos() {
 		return this.photos;
@@ -72,7 +61,6 @@ public class Album {
 	}
 	
 	public void addPhoto(Photo photo) {
-		photo.setOwner(this.owner);
 		this.photos.add(photo);
 	}
 	

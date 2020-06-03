@@ -28,10 +28,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner")
 	private Set<Album> albums = new HashSet<Album>();
-	
-	@ManyToMany
-	private Set<User> friends = new HashSet<User>();
-	
+		
 	@ManyToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Photo> likedPhotos = new HashSet<Photo>();
 
@@ -55,16 +52,11 @@ public class User {
 		return this.albums;
 	}
 
-	public Set<User> getFriends() {
-		return this.friends;
-	}
-
 	public Set<Photo> getLikedPhotos() {
 		return this.likedPhotos;
 	}
 	
 	public void addAlbum(Album album) {
-		album.setOwner(this.getUserName());
 		this.albums.add(album);
 	}
 	
@@ -72,29 +64,9 @@ public class User {
 		this.albums.remove(album);
 	}
 	
-	public void addFriend(User user) {
-		this.friends.add(user);
-		user.getFriends().add(this);
-	}
-	
-	public void removeFriend(User user) {
-		this.friends.remove(user);
-		user.getFriends().remove(this);
-	}
-	
 	public void likePhoto(Photo photo) {
-		boolean isOwnerFriend = false;
-		for (User user : this.friends) {
-			if (user.getUserName().equals(photo.getOwner())) {
-				this.likedPhotos.add(photo);
-				photo.getLikingUsers().add(this);
-				isOwnerFriend = true;
-				break;
-			}
-		}
-		if (!isOwnerFriend) {
-			System.out.println("Photo has not been liked. Its owner is not a friend of yours.");
-		}
+		this.likedPhotos.add(photo);
+		photo.getLikingUsers().add(this);
 	}
 	
 	public void unlikePhoto(Photo photo) {
@@ -112,6 +84,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User \'" + getUserName() + "\'. " + getFriends().size() + " friends. " + getPhotosNumber() + " photos in " + getAlbums().size() + " albums.";
+		return "User \'" + getUserName() + "\'. " + getPhotosNumber() + " photos in " + getAlbums().size() + " albums.";
 	}
 }

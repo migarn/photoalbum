@@ -26,9 +26,6 @@ public class Photo {
 	@Column
 	private Date date;
 	
-	@Column
-	private String owner;
-	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name = "photos_users",
@@ -51,14 +48,6 @@ public class Photo {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public String getOwner() {
-		return this.owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
 	}
 
 	public Date getDate() {
