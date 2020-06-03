@@ -1,20 +1,23 @@
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="photos")
+@Table(name = "photos")
 public class Photo {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column
@@ -26,7 +29,12 @@ public class Photo {
 	@Column
 	private String owner;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(
+			name = "photos_users",
+			joinColumns = @JoinColumn(name = "photo_id"),
+			inverseJoinColumns = @JoinColumn(name = "userName")
+	)
 	private Set<User> likingUsers = new HashSet<User>();
 
 	public long getId() {

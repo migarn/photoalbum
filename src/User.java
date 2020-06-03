@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 	
 	@Id
@@ -25,14 +25,14 @@ public class User {
 	@Column
 	private Date joinDate;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="owner")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "owner")
 	private Set<Album> albums = new HashSet<Album>();
 	
 	@ManyToMany
 	private Set<User> friends = new HashSet<User>();
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Photo> likedPhotos = new HashSet<Photo>();
 
 	public String getUserName() {

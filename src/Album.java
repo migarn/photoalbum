@@ -11,11 +11,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="albums")
+@Table(name = "albums")
 public class Album {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column
@@ -27,8 +27,8 @@ public class Album {
 	@Column
 	private String owner;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="album_id")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "album_id")
 	private Set<Photo> photos = new LinkedHashSet<Photo>();
 
 	public long getId() {
