@@ -28,7 +28,7 @@ public class Album {
 	private String owner;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	//@JoinColumn(name="school_id")
+	@JoinColumn(name="album_id")
 	private Set<Photo> photos = new LinkedHashSet<Photo>();
 
 	public long getId() {

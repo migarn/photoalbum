@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,7 +26,7 @@ public class User {
 	private Date joinDate;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	//@JoinColumn(name="school_id")
+	@JoinColumn(name="owner")
 	private Set<Album> albums = new HashSet<Album>();
 	
 	@ManyToMany
