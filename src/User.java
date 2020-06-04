@@ -5,32 +5,42 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "users")
 public class User {
 	
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(name = "PR_KEY")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	@Column
 	private String userName;
 	
 	@Column
 	private Date joinDate;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_userName")
+	@JoinColumn(name = "user_id")
 	private Set<Album> albums = new HashSet<Album>();
 		
-	@ManyToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "likingUsers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Photo> likedPhotos = new HashSet<Photo>();
+
+		
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getUserName() {
 		return userName;
