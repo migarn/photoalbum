@@ -1,7 +1,10 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class Main {
 
@@ -11,13 +14,9 @@ public class Main {
 	public static void main(String[] args) {
 		Main main = new Main();
 		main.addNewData();
+		main.printUsers();
 		
 		
-
-		
-		
-		
-		// tu wstaw kod aplikacji
 		main.close();
 	}
 
@@ -32,11 +31,24 @@ public class Main {
 	
 	private void addNewData() {
 		User user1 = new User();
-		user1.setUserName("jan_kowalski_1995");
+		user1.setUserName("jurek5");
 		try {
 			user1.setJoinDate(dateFormat.parse("12/12/1995"));
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+		
+		Transaction transaction = session.beginTransaction();
+		session.save(user1);
+		transaction.commit();
+	}
+	
+	private void printUsers() {
+		Criteria crit = session.createCriteria(User.class);
+		List<User> users = crit.list();
+		System.out.println("Photoalbum users:");
+		for (User user : users) {
+			System.out.println(user);
 		}
 	}
 }
