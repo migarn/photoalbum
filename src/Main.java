@@ -36,11 +36,20 @@ public class Main {
 		main.printData();
 		System.out.println("\n-------------------------\n\nStep 3: removing a photo:\n\n-------------------------\n");
 		main.removePhoto();
-		main.close();
-		// Nie wiem dlaczego, ale kiedy wo³a³em printData() bezpoœrednio po  removePhoto()
-		// drukowa³y siê nieaktualne dane. ¯eby temu zapobiec jeszcze raz wywo³a³em Main().
-		main = new Main();
 		main.printData();
+		// Nie wiem dlaczego po zawo³¹niu metody removePhoto() metoda printData() drukuje nieaktualne dane.
+		// Stan bazy danych jest taki, jaki byæ powinien, ale drukuj¹ siê dodatkowe dane, któych ju¿ nie ma w bazie.
+		System.out.println("\n-------------------------\n\nStep 4: removing an album:\n\n-------------------------\n");
+		main.removeAlbum();
+		main.printData();
+		// Nie wiem dlaczego po zawo³¹niu metody removeAlbum() metoda printData() drukuje nieaktualne dane.
+		// Stan bazy danych jest taki, jaki byæ powinien, ale drukuj¹ siê dodatkowe dane, któych ju¿ nie ma w bazie.
+		System.out.println("\n-------------------------\n\nStep 5: removing a user:\n\n-------------------------\n");
+		main.removeUser();
+		main.printData();
+		// Nie wiem dlaczego po zawo³¹niu metody removeAlbum() metoda printData() drukuje nieaktualne dane.
+		// Stan bazy danych jest taki, jaki byæ powinien, ale drukuj¹ siê dodatkowe dane, któych ju¿ nie ma w bazie.
+		main.close();
 	}
 
 	public Main() {
@@ -172,10 +181,22 @@ public class Main {
 		album1.removePhoto(photo2);
 		Transaction transaction = session.beginTransaction();
 		session.delete(photo2);
-		session.save(user1);
-//		session.save(user2);
-//		session.save(user3);
-		transaction.commit();	
+		session.save(user1);	
+		transaction.commit();
+	}
+	
+	private void removeAlbum() {
+		user3.removeAlbum(album4);
+		Transaction transaction = session.beginTransaction();
+		session.delete(album4);
+		session.save(user3);		
+		transaction.commit();
+	}
+	
+	private void removeUser() {
+		Transaction transaction = session.beginTransaction();
+		session.delete(user1);		
+		transaction.commit();
 	}
 	
 	private void printData() {

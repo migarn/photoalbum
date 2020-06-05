@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="libs/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="libs/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="libs/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="libs/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate-core.jar" sourcepath="C:/Users/nazwa/.m2/repository/org/hibernate/hibernate-core/3.3.0.SP1/hibernate-core-3.3.0.SP1-sources.jar"/>
 	<classpathentry kind="lib" path="libs/hibernate3.jar"/>
 	<classpathentry kind="lib" path="libs/javassist.jar"/>
 	<classpathentry kind="lib" path="libs/jta.jar"/>
