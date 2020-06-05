@@ -11,11 +11,36 @@ import org.hibernate.Transaction;
 public class Main {
 
 	Session session;
+	User user1 = new User();
+	User user2 = new User();
+	User user3 = new User();
+	Album album1 = new Album();
+	Album album2 = new Album();
+	Album album3 = new Album();
+	Album album4 = new Album();
+	Photo photo1 = new Photo();
+	Photo photo2 = new Photo();
+	Photo photo3 = new Photo();
+	Photo photo4 = new Photo();
+	Photo photo5 = new Photo();
+	Photo photo6 = new Photo();
 
 	public static void main(String[] args) {
+		
 		Main main = new Main();
-		main.run(main);		
+		System.out.println("\n-------------------------\n\nStep 1: entering data:\n\n-------------------------\n");
+		main.setData();
+		main.printData();
+		System.out.println("\n-------------------------\n\nStep 2: unliking photos:\n\n-------------------------\n");
+		main.unlikePhotos();
+		main.printData();
+		System.out.println("\n-------------------------\n\nStep 3: removing a photo:\n\n-------------------------\n");
+		main.removePhoto();
 		main.close();
+		// Nie wiem dlaczego, ale kiedy wo³a³em printData() bezpoœrednio po  removePhoto()
+		// drukowa³y siê nieaktualne dane. ¯eby temu zapobiec jeszcze raz wywo³a³em Main().
+		main = new Main();
+		main.printData();
 	}
 
 	public Main() {
@@ -27,12 +52,9 @@ public class Main {
 		HibernateUtil.shutdown();
 	}
 	
-	private void run(Main main) {
+	private void setData() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-		System.out.println("\n-------------------------\n\nStep 1: entering data:\n\n-------------------------\n");
-		
-		User user1 = new User();
+
 		user1.setUserName("Andrew13");
 		try {
 			user1.setJoinDate(dateFormat.parse("2017-06-15"));
@@ -40,7 +62,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		User user2 = new User();
 		user2.setUserName("Paulina_1989");
 		try {
 			user2.setJoinDate(dateFormat.parse("2018-02-20"));
@@ -48,7 +69,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		User user3 = new User();
 		user3.setUserName("grzesiu1");
 		try {
 			user3.setJoinDate(dateFormat.parse("2019-05-05"));
@@ -56,23 +76,18 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Album album1 = new Album();
 		album1.setName("Rodzina");
 		album1.setDescription("Zdjêcia mojej rodziny");
 		
-		Album album2 = new Album();
 		album2.setName("Znajomi");
 		album2.setDescription("Zdjêcia moich znajomych");
 		
-		Album album3 = new Album();
 		album3.setName("Ró¿ne");
 		album3.setDescription("Ró¿ne fotografie");
 		
-		Album album4 = new Album();
 		album4.setName("Wakacje");
 		album4.setDescription("Zdjêcia z wakacji");
 		
-		Photo photo1 = new Photo();
 		photo1.setName("Mama");
 		try {
 			photo1.setDate(dateFormat.parse("2020-02-21"));
@@ -80,7 +95,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Photo photo2 = new Photo();
 		photo2.setName("¯ona");
 		try {
 			photo2.setDate(dateFormat.parse("2020-04-19"));
@@ -88,7 +102,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Photo photo3 = new Photo();
 		photo3.setName("Kumple");
 		try {
 			photo3.setDate(dateFormat.parse("2019-08-15"));
@@ -96,7 +109,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Photo photo4 = new Photo();
 		photo4.setName("Kotek");
 		try {
 			photo4.setDate(dateFormat.parse("2018-09-30"));
@@ -104,7 +116,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Photo photo5 = new Photo();
 		photo5.setName("Z³ota pla¿a");
 		try {
 			photo5.setDate(dateFormat.parse("2019-07-15"));
@@ -112,7 +123,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		Photo photo6 = new Photo();
 		photo6.setName("Opalanie");
 		try {
 			photo6.setDate(dateFormat.parse("2019-07-16"));
@@ -147,21 +157,25 @@ public class Main {
 		session.save(user2);
 		session.save(user3);
 		transaction.commit();
-		
-		main.printData();
-		
-		System.out.println("\n-------------------------\n\nStep 2: unliking photos:\n\n-------------------------\n");
-		
+	}
+	
+	private void unlikePhotos() {
 		user1.unlikePhoto(photo2);
 		user3.unlikePhoto(photo6);
-		
-		transaction = session.beginTransaction();
+		Transaction transaction = session.beginTransaction();
 		session.save(user1);
-		session.save(user2);
 		session.save(user3);
 		transaction.commit();
-		
-		main.printData();
+	}
+	
+	private void removePhoto() {
+		album1.removePhoto(photo2);
+		Transaction transaction = session.beginTransaction();
+		session.delete(photo2);
+		session.save(user1);
+//		session.save(user2);
+//		session.save(user3);
+		transaction.commit();	
 	}
 	
 	private void printData() {

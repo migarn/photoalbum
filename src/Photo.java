@@ -27,6 +27,7 @@ public class Photo {
 	private Date date;
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	//@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(
 			name = "photos_users",
 			joinColumns = @JoinColumn(name = "photo_id"),
