@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -94,6 +95,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User \'" + getUserName() + "\'. " + getPhotosNumber() + " photos in " + getAlbums().size() + " albums.";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return "User \'" + getUserName() + "\', joined " + dateFormat.format(getJoinDate()) + ". " + getPhotosNumber() + " photos in " + getAlbums().size() + " albums.";
 	}
 }
