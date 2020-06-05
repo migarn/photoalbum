@@ -15,8 +15,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main main = new Main();
-		main.addData();
-		main.printUsers();
+		System.out.println("-------------------------\n\nStep 1: data entered:\n\n-------------------------\n");
+		//main.addData();
+		main.printData();
 		
 		
 		main.close();
@@ -31,11 +32,11 @@ public class Main {
 		HibernateUtil.shutdown();
 	}
 	
-	private void addData() {
+	private void addData() {		
 		User user1 = new User();
 		user1.setUserName("Andrew13");
 		try {
-			user1.setJoinDate(dateFormat.parse("1985-06-15"));
+			user1.setJoinDate(dateFormat.parse("2017-06-15"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -43,7 +44,7 @@ public class Main {
 		User user2 = new User();
 		user2.setUserName("Paulina_1989");
 		try {
-			user2.setJoinDate(dateFormat.parse("1989-02-20"));
+			user2.setJoinDate(dateFormat.parse("2018-02-20"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +52,7 @@ public class Main {
 		User user3 = new User();
 		user3.setUserName("grzesiu1");
 		try {
-			user3.setJoinDate(dateFormat.parse("1996-05-05"));
+			user3.setJoinDate(dateFormat.parse("2019-05-05"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -149,12 +150,22 @@ public class Main {
 		transaction.commit();
 	}
 	
-	private void printUsers() {
+	private void printData() {
 		Criteria crit = session.createCriteria(User.class);
 		List<User> users = crit.list();
 		System.out.println("Photoalbum users:");
 		for (User user : users) {
-			System.out.println(user);
+			System.out.println("\n" + user);
+			for (Album album : user.getAlbums()) {
+				System.out.println("  - " + album);
+				for (Photo photo : album.getPhotos()) {
+					System.out.println("    - " + photo);
+				}
+			}
+			System.out.println("  Liked photos:");
+			for (Photo photo : user.getLikedPhotos()) {
+				System.out.println("    - " + photo.getName());
+			}
 		}
 	}
 }

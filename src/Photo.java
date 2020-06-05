@@ -64,7 +64,7 @@ public class Photo {
 	
 	@Override
 	public String toString() {
-		return "Photo \'" + getName() + "\'. Liked by " + getLikingUsers() + "users.";
+		return "Photo \'" + getName() + "\'. Liked by " + getLikingUsers().size() + " users.";
 	}
 
 }
