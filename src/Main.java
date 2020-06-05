@@ -11,15 +11,10 @@ import org.hibernate.Transaction;
 public class Main {
 
 	Session session;
-	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static void main(String[] args) {
 		Main main = new Main();
-		System.out.println("-------------------------\n\nStep 1: data entered:\n\n-------------------------\n");
-		//main.addData();
-		main.printData();
-		
-		
+		main.run(main);		
 		main.close();
 	}
 
@@ -32,7 +27,11 @@ public class Main {
 		HibernateUtil.shutdown();
 	}
 	
-	private void addData() {		
+	private void run(Main main) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		System.out.println("\n-------------------------\n\nStep 1: entering data:\n\n-------------------------\n");
+		
 		User user1 = new User();
 		user1.setUserName("Andrew13");
 		try {
@@ -148,6 +147,21 @@ public class Main {
 		session.save(user2);
 		session.save(user3);
 		transaction.commit();
+		
+		main.printData();
+		
+		System.out.println("\n-------------------------\n\nStep 2: unliking photos:\n\n-------------------------\n");
+		
+		user1.unlikePhoto(photo2);
+		user3.unlikePhoto(photo6);
+		
+		transaction = session.beginTransaction();
+		session.save(user1);
+		session.save(user2);
+		session.save(user3);
+		transaction.commit();
+		
+		main.printData();
 	}
 	
 	private void printData() {
